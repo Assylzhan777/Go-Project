@@ -3,10 +3,9 @@ package db
 import (
 	"database/sql"
 	"fmt"
-	"log"
-
 	"gorm.io/driver/postgres"
 	"gorm.io/gorm"
+	"log"
 
 	"github.com/golang-migrate/migrate/v4"
 	migratepg "github.com/golang-migrate/migrate/v4/database/postgres"
@@ -56,5 +55,4 @@ func InitDB() {
 	}
 
 	DB = gormDB
-
 }
