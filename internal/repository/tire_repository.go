@@ -5,7 +5,7 @@ import (
 	"gorm.io/gorm"
 )
 
-type TireRepository interface {
+type TireRepositoryInterface interface {
 	Create(tire *models.Tire) error
 	GetAll() ([]models.Tire, error)
 	GetByID(id uint) (*models.Tire, error)
@@ -13,34 +13,47 @@ type TireRepository interface {
 	Delete(id uint) error
 }
 
-type tireRepository struct {
+type TireRepository struct {
 	db *gorm.DB
 }
 
-func NewTireRepository(db *gorm.DB) TireRepository {
-	return &tireRepository{db}
+func NewTireRepository(db *gorm.DB) *TireRepository {
+	return &TireRepository{db}
 }
 
-func (r *tireRepository) Create(tire *models.Tire) error {
-	return r.db.Create(tire).Error
+func (r *TireRepository) Create(tire *models.Tire) error {
+	if err := r.db.Create(tire).Error; err != nil {
+		return err
+	}
+	return nil
 }
 
-func (r *tireRepository) GetAll() ([]models.Tire, error) {
+func (r *TireRepository) GetAll() ([]models.Tire, error) {
 	var tires []models.Tire
-	err := r.db.Find(&tires).Error
-	return tires, err
+	if err := r.db.Find(&tires).Error; err != nil {
+		return nil, err
+	}
+	return tires, nil
 }
 
-func (r *tireRepository) GetByID(id uint) (*models.Tire, error) {
+func (r *TireRepository) GetByID(id uint) (*models.Tire, error) {
 	var tire models.Tire
-	err := r.db.First(&tire, id).Error
-	return &tire, err
+	if err := r.db.First(&tire, id).Error; err != nil {
+		return nil, err
+	}
+	return &tire, nil
 }
 
-func (r *tireRepository) Update(tire *models.Tire) error {
-	return r.db.Save(tire).Error
+func (r *TireRepository) Update(tire *models.Tire) error {
+	if err := r.db.Save(tire).Error; err != nil {
+		return err
+	}
+	return nil
 }
 
-func (r *tireRepository) Delete(id uint) error {
-	return r.db.Delete(&models.Tire{}, id).Error
+func (r *TireRepository) Delete(id uint) error {
+	if err := r.db.Delete(&models.Tire{}, id).Error; err != nil {
+		return err
+	}
+	return nil
 }

@@ -1,0 +1,1 @@
+ALTER TABLE tires ADD COLUMN user_id INT;

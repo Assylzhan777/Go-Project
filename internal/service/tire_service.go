@@ -5,7 +5,7 @@ import (
 	"github.com/asylzhan/go-asylzhan-project/internal/repository"
 )
 
-type TireService interface {
+type TireServiceInterface interface {
 	Create(tire *models.Tire) error
 	GetAll() ([]models.Tire, error)
 	GetByID(id uint) (*models.Tire, error)
@@ -13,30 +13,30 @@ type TireService interface {
 	Delete(id uint) error
 }
 
-type tireService struct {
-	repo repository.TireRepository
+type TireService struct {
+	repo repository.TireRepositoryInterface
 }
 
-func NewTireService(repo repository.TireRepository) TireService {
-	return &tireService{repo}
+func NewTireService(repo repository.TireRepositoryInterface) *TireService {
+	return &TireService{repo}
 }
 
-func (s *tireService) Create(tire *models.Tire) error {
+func (s *TireService) Create(tire *models.Tire) error {
 	return s.repo.Create(tire)
 }
 
-func (s *tireService) GetAll() ([]models.Tire, error) {
+func (s *TireService) GetAll() ([]models.Tire, error) {
 	return s.repo.GetAll()
 }
 
-func (s *tireService) GetByID(id uint) (*models.Tire, error) {
+func (s *TireService) GetByID(id uint) (*models.Tire, error) {
 	return s.repo.GetByID(id)
 }
 
-func (s *tireService) Update(tire *models.Tire) error {
+func (s *TireService) Update(tire *models.Tire) error {
 	return s.repo.Update(tire)
 }
 
-func (s *tireService) Delete(id uint) error {
+func (s *TireService) Delete(id uint) error {
 	return s.repo.Delete(id)
 }
